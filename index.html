@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunday Party — Fradiavolo Torino IV Marzo</title>
+
+  <!-- Google Fonts fallback (Barlow Condensed = clone di roc-grotesk-compressed) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,600;1,700;1,900&family=Barlow:wght@400;600;700&display=swap">
+  <!-- Adobe Typekit — roc-grotesk (carica solo su fradiavolopizzeria.com) -->
+  <link rel="stylesheet" href="https://use.typekit.net/mrc1jja.css">
+
+  <style>
+    /* ─── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:     #a82720;
+      --yellow:  #fcbc17;
+      --cream:   #fef2e0;
+      --pepper:  #f7f6f2;
+      --black:   #000000;
+      --white:   #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'roc-grotesk', 'Barlow', ui-sans-serif, system-ui, sans-serif;
+      background-color: var(--red);
+      color: var(--white);
+      min-height: 100vh;
+    }
+
+    /* ─── Grain overlay (like the real site) ────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+    }
+
+    /* ─── big-text (exact from site) ────────────────────────── */
+    .big-text {
+      font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif;
+      font-size: 6rem;
+      font-weight: 600;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    @media (min-width: 768px) {
+      .big-text { font-size: 12vw; line-height: 10vw; }
+    }
+    @media (min-width: 1024px) {
+      .big-text { font-size: 8vw; line-height: 8vw; }
+    }
+
+    /* ─── big-shadow (exact from site) ──────────────────────── */
+    .big-shadow {
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(1px 1px 0 black)
+        drop-shadow(2px 2px 0 black)
+        drop-shadow(3px 3px 0 black);
+    }
+
+    /* ─── Sparkle animation ──────────────────────────────────── */
+    @keyframes sparkling {
+      0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+      50%       { opacity: 0.4; transform: scale(0.7) rotate(20deg); }
+    }
+    @keyframes sparkling2 {
+      0%, 100% { opacity: 0.5; transform: scale(0.8) rotate(0deg); }
+      50%       { opacity: 1; transform: scale(1.1) rotate(-15deg); }
+    }
+    .sparkle-1 { animation: sparkling 2s ease-in-out infinite; }
+    .sparkle-2 { animation: sparkling2 2.5s ease-in-out infinite; }
+
+    /* ─── Navbar (identical to site) ────────────────────────── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 850;
+      background-color: var(--red);
+      border-bottom: 2px solid var(--black);
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif;
+      font-size: 2rem;
+      color: var(--white);
+      user-select: none;
+    }
+
+    .navbar__logo img {
+      height: 44px;
+      width: auto;
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(1px 1px 0 black)
+        drop-shadow(2px 2px 0 black);
+      transition: filter 0.15s, transform 0.15s;
+      padding: 0.25rem 0.5rem 0.25rem 0;
+    }
+    .navbar__logo img:hover {
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(2px 2px 0 black)
+        drop-shadow(4px 4px 0 black);
+      transform: translate(1px, 1px);
+    }
+
+    .navbar__links {
+      display: none;
+      flex-direction: row;
+      gap: 1rem;
+      text-transform: uppercase;
+      padding-top: 0.5rem;
+    }
+    @media (min-width: 768px) {
+      .navbar__links { display: flex; gap: 2.5vw; }
+    }
+
+    .navbar__links a {
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif;
+      transition: opacity 0.15s;
+    }
+    .navbar__links a:hover { opacity: 0.75; }
+
+    /* ─── CTA Button (identical to Prenota/Iscriviti) ────────── */
+    .btn-cta {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--yellow);
+      color: var(--black);
+      border: 2px solid var(--black);
+      border-radius: 4px;
+      padding: 0.75rem 2rem 0.5rem;
+      font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif;
+      font-size: 3rem;
+      font-weight: 600;
+      line-height: 1;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transform: skewX(-6deg);
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(1px 1px 0 black)
+        drop-shadow(2px 2px 0 black)
+        drop-shadow(3px 3px 0 black);
+      transition: filter 0.15s, transform 0.15s;
+      width: 100%;
+    }
+    .btn-cta:hover:not(:disabled) {
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(2px 2px 0 black)
+        drop-shadow(4px 4px 0 black)
+        drop-shadow(6px 6px 0 black);
+      transform: skewX(-6deg) translate(1px, 1px);
+    }
+    .btn-cta:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .btn-cta .sparkle {
+      position: absolute;
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+    .btn-cta .sparkle-top    { top: 3px; right: 3px; }
+    .btn-cta .sparkle-bottom { bottom: 3px; left: 3px; width: 1.1rem; height: 1.1rem; }
+
+    /* ─── Hero ───────────────────────────────────────────────── */
+    .hero {
+      width: 100%;
+      height: 520px;
+      position: relative;
+      overflow: hidden;
+      background-color: #3d1410;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .hero__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.7;
+    }
+
+    .hero__placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2a0c09 0%, #4e1a14 50%, #2a0c09 100%);
+      color: rgba(255,255,255,0.15);
+      font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(168,39,32,0.6) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .hero__eyebrow {
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ─── Main ───────────────────────────────────────────────── */
+    .main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 5rem;
+    }
+
+    /* ─── Event Info ─────────────────────────────────────────── */
+    .event-info {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .event-info__desc {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.85);
+      text-transform: uppercase;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .event-meta {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0 2rem;
+    }
+
+    .event-meta__item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--yellow);
+    }
+
+    /* ─── Divider ────────────────────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 2.5rem 0;
+    }
+    .divider__line { flex: 1; height: 2px; background: rgba(0,0,0,0.25); }
+    .divider__dot  { width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
+
+    /* ─── Form Card ──────────────────────────────────────────── */
+    .card {
+      background-color: var(--cream);
+      border: 2px solid var(--black);
+      padding: 2.5rem 2rem 2rem;
+      position: relative;
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(2px 2px 0 black)
+        drop-shadow(4px 4px 0 black)
+        drop-shadow(6px 6px 0 black);
+    }
+
+    .card__heading {
+      font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif;
+      font-size: 3rem;
+      font-weight: 600;
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 0.35rem;
+    }
+
+    .card__subheading {
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(0,0,0,0.5);
+      margin-bottom: 2rem;
+    }
+
+    /* ─── Form Fields ────────────────────────────────────────── */
+    .form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+    .form__group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    .form__label {
+      font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .form__label span { color: var(--red); }
+
+    .form__input {
+      width: 100%;
+      padding: 0.6rem 0.75rem 0.4rem;
+      font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--black);
+      background-color: var(--cream);
+      border: 2px solid var(--black);
+      border-radius: 0;
+      outline: none;
+      text-transform: uppercase;
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(1px 1px 0 black)
+        drop-shadow(2px 2px 0 black)
+        drop-shadow(3px 3px 0 black);
+      transition: filter 0.15s;
+      -webkit-appearance: none;
+    }
+    .form__input::placeholder {
+      color: rgba(0,0,0,0.3);
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+    .form__input:focus {
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(2px 2px 0 black)
+        drop-shadow(4px 4px 0 black)
+        drop-shadow(5px 5px 0 black);
+    }
+
+    /* ─── Checkbox ───────────────────────────────────────────── */
+    .form__checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    .form__checkbox-wrap {
+      position: relative;
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      margin-top: 1px;
+    }
+
+    .form__checkbox-wrap input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      inset: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    .form__checkbox-custom {
+      display: block;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--black);
+      background: var(--cream);
+      filter: drop-shadow(1px 1px 0 black) drop-shadow(2px 2px 0 black);
+      pointer-events: none;
+      transition: background-color 0.15s;
+    }
+
+    .form__checkbox-wrap input[type="checkbox"]:checked + .form__checkbox-custom {
+      background-color: var(--red);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4.5L4.5 8L11 1' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 11px;
+    }
+
+    .form__checkbox-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      line-height: 1.6;
+      color: rgba(0,0,0,0.75);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .form__checkbox-label a {
+      color: var(--red);
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .form__checkbox-label a:hover { opacity: 0.75; }
+
+    /* ─── Status Messages ────────────────────────────────────── */
+    .form__status {
+      display: none;
+      padding: 0.85rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      border: 2px solid var(--black);
+      margin-top: 0.5rem;
+    }
+    .form__status--success { background: var(--yellow); color: var(--black); }
+    .form__status--error   { background: #fff0f0; color: var(--red); }
+
+    /* ─── Footer ─────────────────────────────────────────────── */
+    .footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      border-top: 2px solid rgba(0,0,0,0.2);
+      margin-top: 3rem;
+    }
+
+    .footer__logo {
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    .footer__logo img {
+      height: 32px;
+      width: auto;
+      opacity: 0.85;
+    }
+
+    .footer__copy {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ─── Page grid ─────────────────────────────────────────── */
+    .page-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        "text photo"
+        "form form";
+    }
+
+    .col-text {
+      grid-area: text;
+      padding: 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      border-right: 2px solid var(--black);
+      border-bottom: 2px solid var(--black);
+    }
+
+    .col-photo {
+      grid-area: photo;
+      position: relative;
+      min-height: 580px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .col-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .col-form {
+      grid-area: form;
+    }
+
+    /* ─── Form block ─────────────────────────────────────────── */
+    .form-block {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 5rem;
+      width: 100%;
+    }
+
+    /* ─── Scroll CTA ─────────────────────────────────────────── */
+    .btn-scroll {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--yellow);
+      color: var(--black);
+      border: 2px solid var(--black);
+      border-radius: 4px;
+      padding: 0.75rem 2rem 0.5rem;
+      font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      line-height: 1;
+      text-transform: uppercase;
+      text-decoration: none;
+      transform: skewX(-6deg);
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(1px 1px 0 black)
+        drop-shadow(2px 2px 0 black)
+        drop-shadow(3px 3px 0 black);
+      transition: filter 0.15s, transform 0.15s;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .btn-scroll:hover {
+      filter:
+        drop-shadow(0 0 0 black)
+        drop-shadow(2px 2px 0 black)
+        drop-shadow(4px 4px 0 black)
+        drop-shadow(6px 6px 0 black);
+      transform: skewX(-6deg) translate(1px, 1px);
+    }
+
+    /* ─── Mobile ─────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .page-grid {
+        display: flex;
+        flex-direction: column;
+      }
+      .col-text  { order: 1; padding: 2.5rem 1.5rem; border-right: none; }
+      .col-form  { order: 2; border-bottom: 2px solid var(--black); }
+      .col-photo { order: 3; min-height: 320px; border-bottom: none; }
+      .card { padding: 1.75rem 1.25rem 1.5rem; }
+      .btn-cta   { font-size: 2.2rem; }
+      .btn-scroll { font-size: 2rem; }
+      .card__heading { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+  <!-- ═══ NAVBAR ══════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <a class="navbar__logo" href="https://fradiavolopizzeria.com" target="_blank" rel="noopener">
+      <svg class="big-shadow" width="206" height="36" viewBox="0 0 206 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:44px;width:auto;padding:0.25rem 0.5rem 0.25rem 0;">
+        <path d="M205.23 5.53413C203.982 2.35299 201.382 0.739922 197.501 0.739922C194.378 0.739922 191.255 1.90292 188.221 4.1965C184.159 7.26962 181.119 11.7668 179.184 17.5601C178.175 20.5828 177.646 23.2707 177.614 25.5481C177.612 25.7173 177.614 25.8829 177.614 26.0468H172.679C172.452 26.0468 172.292 25.8253 172.362 25.6093L180.134 1.8003C180.205 1.58426 180.044 1.36283 179.817 1.36283H171.134C170.99 1.36283 170.86 1.45644 170.817 1.59326L166.989 13.3204C167.514 10.2437 167.368 7.63508 166.544 5.53413C165.296 2.35299 162.696 0.739922 158.814 0.739922C155.692 0.739922 152.569 1.90292 149.535 4.1965C148.543 4.94723 147.613 5.78257 146.745 6.70072L149.493 1.86151C149.619 1.64007 149.459 1.36283 149.203 1.36283H140.204C140.078 1.36283 139.961 1.43484 139.905 1.54826L130.331 20.8691C130.16 21.2166 129.633 21.0419 129.704 20.6603L133.212 1.75709C133.25 1.55186 133.093 1.36283 132.884 1.36283H123.684C123.512 1.36283 123.37 1.49065 123.352 1.66168L119.903 34.0527C119.881 34.2489 120.036 34.4218 120.235 34.4218H130.805C130.926 34.4218 131.036 34.357 131.096 34.2525L140.388 17.8896C139.449 20.7791 138.957 23.3535 138.926 25.5463C138.893 27.8525 139.368 29.8058 140.338 31.3559C141.892 33.8169 144.358 35.0645 147.668 35.0645C151.35 35.0645 154.906 33.4766 158.234 30.3423C160.585 28.1315 162.537 25.4239 164.068 22.2661L160.244 33.9807C160.174 34.1967 160.334 34.4182 160.561 34.4182H175.769C175.914 34.4182 176.044 34.3246 176.087 34.1877L177.913 28.5924C178.148 29.6186 178.519 30.5421 179.026 31.3541C180.58 33.8151 183.046 35.0627 186.356 35.0627C190.038 35.0627 193.594 33.4748 196.922 30.3405C200.246 27.2134 202.776 23.1015 204.442 18.1146C206.189 12.883 206.456 8.64865 205.234 5.53052L205.23 5.53413ZM155.991 17.9814C155.118 20.5937 154.137 22.655 153.072 24.115C152.08 25.5085 151.107 26.216 150.178 26.216C149.655 26.216 148.954 26.0126 148.876 24.2537C148.813 22.79 149.235 20.6837 150.135 17.994C151.049 15.2576 152.048 13.162 153.108 11.7596C154.175 10.3067 155.187 9.5704 156.117 9.5704C156.535 9.5704 156.838 9.70903 157.046 9.99527C157.958 11.2591 156.975 15.0361 155.991 17.9832V17.9814ZM194.679 17.9814C193.806 20.5937 192.825 22.655 191.76 24.115C190.768 25.5085 189.795 26.216 188.866 26.216C188.343 26.216 187.642 26.0126 187.564 24.2537C187.501 22.79 187.923 20.6837 188.823 17.994C189.737 15.2576 190.736 13.162 191.796 11.7596C192.863 10.3067 193.875 9.5704 194.805 9.5704C195.223 9.5704 195.526 9.70903 195.734 9.99527C196.646 11.2591 195.663 15.0361 194.679 17.9832V17.9814Z" fill="#EEEEEE"/>
+        <path d="M121.688 1.36463H110.886C110.765 1.36463 110.654 1.42944 110.594 1.53566L96.6591 25.3158L104.336 1.80211C104.406 1.58607 104.246 1.36643 104.019 1.36643H95.2996C95.1554 1.36643 95.0274 1.46005 94.9823 1.59687L90.9887 13.8317C91.1636 12.7047 91.2339 11.6426 91.1943 10.6506C91.1095 8.46682 90.5019 6.5639 89.3913 4.99764C87.6947 2.58704 84.5846 1.36463 80.1493 1.36463L72.5029 1.36823C72.3551 1.36823 72.2253 1.46365 72.1802 1.60227L64.8025 24.2033C65.7328 15.4574 66.9588 3.94266 67.1932 1.7427C67.2148 1.54466 67.058 1.37003 66.8578 1.37003H56.0563C55.9355 1.37003 55.8237 1.43484 55.7624 1.54106L41.4649 26.7147C41.299 27.0081 40.8519 26.9019 40.8356 26.5653L40.558 21.0329C40.5508 20.8943 40.6301 20.7683 40.7545 20.7107C44.2054 19.1156 46.5655 16.435 47.7735 12.7299C49.0121 8.9313 48.6515 5.941 46.6971 3.83645C45.1429 2.17657 42.397 1.37003 38.3025 1.37003H29.2822C29.1344 1.37003 29.0046 1.46365 28.9595 1.60227L18.3869 33.9861C18.3166 34.2039 18.4789 34.4272 18.7079 34.4272H27.7083C27.8543 34.4272 27.9841 34.3336 28.0292 34.1949L30.84 25.5895C30.9554 25.2348 31.4783 25.305 31.4963 25.6777L31.9164 34.1085C31.9254 34.2868 32.0732 34.4272 32.2535 34.4272H47.0577C47.1857 34.4272 47.3029 34.3552 47.3588 34.2399L49.1888 30.5511C49.2447 30.4359 49.3619 30.3639 49.4899 30.3639H53.835C54.046 30.3639 54.2046 30.5547 54.1668 30.7618L53.5592 34.0311C53.5213 34.2381 53.68 34.429 53.8909 34.429H62.7741H70.132C74.7296 34.429 78.4491 33.2498 81.6205 30.7149C84.3286 28.5456 86.5516 25.6831 88.2608 22.1761L84.4025 33.9933C84.3322 34.2093 84.4927 34.429 84.7198 34.429H93.439C93.439 34.429 93.4462 34.429 93.4516 34.429H101.888C102.016 34.429 102.133 34.357 102.189 34.2417L104.019 30.5529C104.076 30.4377 104.192 30.3657 104.32 30.3657H108.665C108.876 30.3657 109.035 30.5565 108.997 30.7636L108.389 34.0329C108.351 34.2399 108.51 34.4308 108.721 34.4308H118.239C118.412 34.4308 118.556 34.3012 118.574 34.1301C118.902 31.0462 121.657 5.16147 122.021 1.7445C122.043 1.54646 121.886 1.37183 121.686 1.37183L121.688 1.36463ZM38.4629 11.6227C38.3259 12.044 38.2827 12.1772 38.1727 12.5139C38.023 12.9748 37.7886 13.6949 37.5723 14.3574C37.2622 15.3062 36.3751 15.9471 35.3763 15.9453C35.0463 15.9453 34.72 15.9453 34.4586 15.9453C34.226 15.9453 34.0601 15.7202 34.1322 15.5006L35.8793 10.1411C35.9244 10.0025 36.0542 9.90886 36.2002 9.90886C36.5049 9.90886 36.8601 9.90886 37.2153 9.90886C38.106 9.90886 38.737 10.7766 38.4611 11.6227H38.4629ZM56.8568 16.2729L55.7534 22.2283C55.7245 22.3868 55.5857 22.502 55.4252 22.502H53.7196C53.4708 22.502 53.3104 22.2409 53.4203 22.0195L56.352 16.1037C56.4908 15.8229 56.9163 15.9651 56.8586 16.2729H56.8568ZM80.0628 18.9104C77.7207 26.0414 75.4922 26.0414 74.0877 26.0414C73.8552 26.0414 73.6893 25.8163 73.7614 25.5967L78.7827 10.1411C78.8277 10.0025 78.9575 9.90886 79.1036 9.90886C80.4198 9.90886 83.2216 9.19054 80.0628 18.9104ZM111.687 16.2711L110.583 22.2265C110.555 22.385 110.416 22.5002 110.255 22.5002H108.55C108.301 22.5002 108.14 22.2391 108.25 22.0177L111.182 16.1019C111.321 15.8211 111.746 15.9633 111.689 16.2711H111.687Z" fill="#EEEEEE"/>
+        <path d="M20.7379 21.5856L23.1918 14.0694C23.2729 13.8227 23.0872 13.5689 22.8276 13.5689H17.7018C17.4421 13.5689 17.2564 13.315 17.3376 13.0684L18.2805 10.1753C18.3328 10.0169 18.4788 9.91067 18.6447 9.91067H24.7351C24.901 9.91067 25.0488 9.80445 25.0993 9.64602L27.6379 1.86692C27.719 1.62027 27.5333 1.36643 27.2737 1.36643H11.6708C11.505 1.36643 11.3571 1.47265 11.3066 1.63108L0.762895 33.9213C0.681761 34.1679 0.867467 34.4218 1.12709 34.4218H10.086C10.2519 34.4218 10.3997 34.3156 10.4502 34.1571L14.3843 22.1113C14.4366 21.9547 14.5826 21.8467 14.7485 21.8467H20.3737C20.5396 21.8467 20.6875 21.7404 20.7379 21.582V21.5856Z" fill="#EEEEEE"/>
+      </svg>
+    </a>
+
+  </nav>
+
+  <!-- ═══ PAGE GRID ══════════════════════════════════════════ -->
+  <div class="page-grid">
+
+    <!-- Colonna sinistra: testo -->
+    <div class="col-text">
+      <div class="big-text" style="color: var(--cream);">
+        Sunday Party
+      </div>
+
+      <p style="font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif; font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--yellow); line-height: 1.3; margin-top: -0.5rem;">
+        Free Pizza "sottile" slice · Free Beer by Baladin
+      </p>
+
+      <div class="event-meta" style="justify-content: flex-start; flex-direction: column; gap: 0.75rem;">
+        <div class="event-meta__item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Domenica 19 Aprile
+        </div>
+        <div class="event-meta__item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Ore 15:00 – 19:00
+        </div>
+        <div class="event-meta__item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          Fradiavolo Torino IV Marzo
+        </div>
+      </div>
+
+      <p class="event-info__desc" style="text-align: left; margin: 0;">
+        Un pomeriggio speciale dedicato al<br>
+        <span style="font-family: 'roc-grotesk-compressed', 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 600; text-transform: uppercase; color: var(--white); line-height: 1; display: block; margin: 0.25rem 0 0.5rem;">lancio del nostro nuovo impasto sottile:</span>
+        più leggero, più croccante, semplicemente irresistibile.<br><br>
+        Music: WOC · dasar · Kime b2b Saso<br>
+        Special Thanks: Roots, Baladin
+      </p>
+
+      <a href="#form-section" class="btn-scroll">Registrati</a>
+
+    </div>
+
+    <!-- Colonna destra: foto -->
+    <div class="col-photo">
+      <img src="img/FABI8558.jpg" alt="Sunday Party — Fradiavolo Torino IV Marzo">
+    </div>
+
+    <!-- Form — full width sotto su desktop, secondo blocco su mobile -->
+    <div class="col-form" id="form-section">
+  <main>
+  <div class="form-block">
+
+    <!-- Form registrazione -->
+    <div class="card">
+      <h2 class="card__heading">Registrati all'evento</h2>
+      <p class="card__subheading">Compila il modulo per assicurarti il tuo posto.</p>
+
+      <form class="form" id="registrationForm" novalidate>
+
+        <div class="form__group">
+          <label class="form__label" for="nome">Nome e Cognome <span>*</span></label>
+          <input
+            class="form__input"
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Mario Rossi"
+            autocomplete="name"
+            required
+          >
+        </div>
+
+        <div class="form__group">
+          <label class="form__label" for="email">Email <span>*</span></label>
+          <input
+            class="form__input"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="mario@esempio.it"
+            autocomplete="email"
+            required
+          >
+        </div>
+
+        <div class="form__group" style="margin-top: 0.5rem;">
+          <div class="form__checkbox-row">
+            <label class="form__checkbox-wrap">
+              <input type="checkbox" id="consenso" name="consenso" required>
+              <span class="form__checkbox-custom"></span>
+            </label>
+            <label class="form__checkbox-label" for="consenso">
+              Acconsento al trattamento dei miei dati personali per finalità di marketing
+              da parte di Fradiavolo Pizzeria, in conformità con la
+              <a href="https://fradiavolopizzeria.com/privacy-policy" target="_blank" rel="noopener">
+                Privacy Policy
+              </a>. <span style="color:var(--red)">*</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- CTA — identica a Prenota/Iscriviti -->
+        <div style="margin-top: 0.75rem;">
+          <button type="submit" class="btn-cta" id="submitBtn">
+            Registrati
+          </button>
+        </div>
+
+        <div class="form__status form__status--success" id="statusSuccess">
+          Perfetto! La tua registrazione è stata ricevuta. A presto!
+        </div>
+        <div class="form__status form__status--error" id="statusError">
+          Qualcosa è andato storto. Riprova o contattaci direttamente.
+        </div>
+
+      </form>
+    </div>
+
+  </div><!-- /.form-block -->
+  </main>
+    </div><!-- /.col-form -->
+
+  </div><!-- /.page-grid -->
+
+  <!-- ═══ FOOTER ══════════════════════════════════════════════ -->
+  <footer class="footer">
+    <a class="footer__logo" href="https://fradiavolopizzeria.com" target="_blank" rel="noopener">
+      <svg width="206" height="36" viewBox="0 0 206 36" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:28px;width:auto;opacity:0.7;">
+        <path d="M205.23 5.53413C203.982 2.35299 201.382 0.739922 197.501 0.739922C194.378 0.739922 191.255 1.90292 188.221 4.1965C184.159 7.26962 181.119 11.7668 179.184 17.5601C178.175 20.5828 177.646 23.2707 177.614 25.5481C177.612 25.7173 177.614 25.8829 177.614 26.0468H172.679C172.452 26.0468 172.292 25.8253 172.362 25.6093L180.134 1.8003C180.205 1.58426 180.044 1.36283 179.817 1.36283H171.134C170.99 1.36283 170.86 1.45644 170.817 1.59326L166.989 13.3204C167.514 10.2437 167.368 7.63508 166.544 5.53413C165.296 2.35299 162.696 0.739922 158.814 0.739922C155.692 0.739922 152.569 1.90292 149.535 4.1965C148.543 4.94723 147.613 5.78257 146.745 6.70072L149.493 1.86151C149.619 1.64007 149.459 1.36283 149.203 1.36283H140.204C140.078 1.36283 139.961 1.43484 139.905 1.54826L130.331 20.8691C130.16 21.2166 129.633 21.0419 129.704 20.6603L133.212 1.75709C133.25 1.55186 133.093 1.36283 132.884 1.36283H123.684C123.512 1.36283 123.37 1.49065 123.352 1.66168L119.903 34.0527C119.881 34.2489 120.036 34.4218 120.235 34.4218H130.805C130.926 34.4218 131.036 34.357 131.096 34.2525L140.388 17.8896C139.449 20.7791 138.957 23.3535 138.926 25.5463C138.893 27.8525 139.368 29.8058 140.338 31.3559C141.892 33.8169 144.358 35.0645 147.668 35.0645C151.35 35.0645 154.906 33.4766 158.234 30.3423C160.585 28.1315 162.537 25.4239 164.068 22.2661L160.244 33.9807C160.174 34.1967 160.334 34.4182 160.561 34.4182H175.769C175.914 34.4182 176.044 34.3246 176.087 34.1877L177.913 28.5924C178.148 29.6186 178.519 30.5421 179.026 31.3541C180.58 33.8151 183.046 35.0627 186.356 35.0627C190.038 35.0627 193.594 33.4748 196.922 30.3405C200.246 27.2134 202.776 23.1015 204.442 18.1146C206.189 12.883 206.456 8.64865 205.234 5.53052L205.23 5.53413ZM155.991 17.9814C155.118 20.5937 154.137 22.655 153.072 24.115C152.08 25.5085 151.107 26.216 150.178 26.216C149.655 26.216 148.954 26.0126 148.876 24.2537C148.813 22.79 149.235 20.6837 150.135 17.994C151.049 15.2576 152.048 13.162 153.108 11.7596C154.175 10.3067 155.187 9.5704 156.117 9.5704C156.535 9.5704 156.838 9.70903 157.046 9.99527C157.958 11.2591 156.975 15.0361 155.991 17.9832V17.9814ZM194.679 17.9814C193.806 20.5937 192.825 22.655 191.76 24.115C190.768 25.5085 189.795 26.216 188.866 26.216C188.343 26.216 187.642 26.0126 187.564 24.2537C187.501 22.79 187.923 20.6837 188.823 17.994C189.737 15.2576 190.736 13.162 191.796 11.7596C192.863 10.3067 193.875 9.5704 194.805 9.5704C195.223 9.5704 195.526 9.70903 195.734 9.99527C196.646 11.2591 195.663 15.0361 194.679 17.9832V17.9814Z" fill="#EEEEEE"/>
+        <path d="M121.688 1.36463H110.886C110.765 1.36463 110.654 1.42944 110.594 1.53566L96.6591 25.3158L104.336 1.80211C104.406 1.58607 104.246 1.36643 104.019 1.36643H95.2996C95.1554 1.36643 95.0274 1.46005 94.9823 1.59687L90.9887 13.8317C91.1636 12.7047 91.2339 11.6426 91.1943 10.6506C91.1095 8.46682 90.5019 6.5639 89.3913 4.99764C87.6947 2.58704 84.5846 1.36463 80.1493 1.36463L72.5029 1.36823C72.3551 1.36823 72.2253 1.46365 72.1802 1.60227L64.8025 24.2033C65.7328 15.4574 66.9588 3.94266 67.1932 1.7427C67.2148 1.54466 67.058 1.37003 66.8578 1.37003H56.0563C55.9355 1.37003 55.8237 1.43484 55.7624 1.54106L41.4649 26.7147C41.299 27.0081 40.8519 26.9019 40.8356 26.5653L40.558 21.0329C40.5508 20.8943 40.6301 20.7683 40.7545 20.7107C44.2054 19.1156 46.5655 16.435 47.7735 12.7299C49.0121 8.9313 48.6515 5.941 46.6971 3.83645C45.1429 2.17657 42.397 1.37003 38.3025 1.37003H29.2822C29.1344 1.37003 29.0046 1.46365 28.9595 1.60227L18.3869 33.9861C18.3166 34.2039 18.4789 34.4272 18.7079 34.4272H27.7083C27.8543 34.4272 27.9841 34.3336 28.0292 34.1949L30.84 25.5895C30.9554 25.2348 31.4783 25.305 31.4963 25.6777L31.9164 34.1085C31.9254 34.2868 32.0732 34.4272 32.2535 34.4272H47.0577C47.1857 34.4272 47.3029 34.3552 47.3588 34.2399L49.1888 30.5511C49.2447 30.4359 49.3619 30.3639 49.4899 30.3639H53.835C54.046 30.3639 54.2046 30.5547 54.1668 30.7618L53.5592 34.0311C53.5213 34.2381 53.68 34.429 53.8909 34.429H62.7741H70.132C74.7296 34.429 78.4491 33.2498 81.6205 30.7149C84.3286 28.5456 86.5516 25.6831 88.2608 22.1761L84.4025 33.9933C84.3322 34.2093 84.4927 34.429 84.7198 34.429H93.439C93.439 34.429 93.4462 34.429 93.4516 34.429H101.888C102.016 34.429 102.133 34.357 102.189 34.2417L104.019 30.5529C104.076 30.4377 104.192 30.3657 104.32 30.3657H108.665C108.876 30.3657 109.035 30.5565 108.997 30.7636L108.389 34.0329C108.351 34.2399 108.51 34.4308 108.721 34.4308H118.239C118.412 34.4308 118.556 34.3012 118.574 34.1301C118.902 31.0462 121.657 5.16147 122.021 1.7445C122.043 1.54646 121.886 1.37183 121.686 1.37183L121.688 1.36463ZM38.4629 11.6227C38.3259 12.044 38.2827 12.1772 38.1727 12.5139C38.023 12.9748 37.7886 13.6949 37.5723 14.3574C37.2622 15.3062 36.3751 15.9471 35.3763 15.9453C35.0463 15.9453 34.72 15.9453 34.4586 15.9453C34.226 15.9453 34.0601 15.7202 34.1322 15.5006L35.8793 10.1411C35.9244 10.0025 36.0542 9.90886 36.2002 9.90886C36.5049 9.90886 36.8601 9.90886 37.2153 9.90886C38.106 9.90886 38.737 10.7766 38.4611 11.6227H38.4629ZM56.8568 16.2729L55.7534 22.2283C55.7245 22.3868 55.5857 22.502 55.4252 22.502H53.7196C53.4708 22.502 53.3104 22.2409 53.4203 22.0195L56.352 16.1037C56.4908 15.8229 56.9163 15.9651 56.8586 16.2729H56.8568ZM80.0628 18.9104C77.7207 26.0414 75.4922 26.0414 74.0877 26.0414C73.8552 26.0414 73.6893 25.8163 73.7614 25.5967L78.7827 10.1411C78.8277 10.0025 78.9575 9.90886 79.1036 9.90886C80.4198 9.90886 83.2216 9.19054 80.0628 18.9104ZM111.687 16.2711L110.583 22.2265C110.555 22.385 110.416 22.5002 110.255 22.5002H108.55C108.301 22.5002 108.14 22.2391 108.25 22.0177L111.182 16.1019C111.321 15.8211 111.746 15.9633 111.689 16.2711H111.687Z" fill="#EEEEEE"/>
+        <path d="M20.7379 21.5856L23.1918 14.0694C23.2729 13.8227 23.0872 13.5689 22.8276 13.5689H17.7018C17.4421 13.5689 17.2564 13.315 17.3376 13.0684L18.2805 10.1753C18.3328 10.0169 18.4788 9.91067 18.6447 9.91067H24.7351C24.901 9.91067 25.0488 9.80445 25.0993 9.64602L27.6379 1.86692C27.719 1.62027 27.5333 1.36643 27.2737 1.36643H11.6708C11.505 1.36643 11.3571 1.47265 11.3066 1.63108L0.762895 33.9213C0.681761 34.1679 0.867467 34.4218 1.12709 34.4218H10.086C10.2519 34.4218 10.3997 34.3156 10.4502 34.1571L14.3843 22.1113C14.4366 21.9547 14.5826 21.8467 14.7485 21.8467H20.3737C20.5396 21.8467 20.6875 21.7404 20.7379 21.582V21.5856Z" fill="#EEEEEE"/>
+      </svg>
+    </a>
+    <p class="footer__copy">&copy; 2026 Fradiavolo Pizzeria — Tutti i diritti riservati</p>
+  </footer>
+
+  </div><!-- /.page-wrapper -->
+
+  <!-- ═══ SCRIPT ══════════════════════════════════════════════
+    ISTRUZIONI GOOGLE APPS SCRIPT:
+    1. Vai su script.google.com → Nuovo progetto
+    2. Incolla questo codice:
+
+    function doPost(e) {
+      const sheet = SpreadsheetApp.openById('IL_TUO_SHEET_ID').getActiveSheet();
+      const data = JSON.parse(e.postData.contents);
+      sheet.appendRow([
+        new Date(),
+        data.nome,
+        data.email,
+        data.consenso ? 'Sì' : 'No'
+      ]);
+      return ContentService
+        .createTextOutput(JSON.stringify({ result: 'success' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    3. Distribuisci → Nuova distribuzione → App web
+       - Esegui come: Me
+       - Accesso: Tutti
+    4. Copia l'URL e incollalo in APPS_SCRIPT_URL qui sotto
+  ════════════════════════════════════════════════════════════ -->
+  <script>
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2v8NunZ7djj-gbAXkcijAr9-ALytD4q9oVAbZd6Zjc4ywKxM5ftFWFC5FDwxoWcDWbg/exec';
+
+    const form      = document.getElementById('registrationForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusOk  = document.getElementById('statusSuccess');
+    const statusErr = document.getElementById('statusError');
+
+    function showStatus(el, msg) {
+      [statusOk, statusErr].forEach(e => (e.style.display = 'none'));
+      if (msg) el.textContent = msg;
+      el.style.display = 'block';
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const nome     = document.getElementById('nome').value.trim();
+      const email    = document.getElementById('email').value.trim();
+      const consenso = document.getElementById('consenso').checked;
+
+      if (!nome || !email || !consenso) {
+        showStatus(statusErr, 'Compila tutti i campi obbligatori e acconsenti al trattamento dei dati.');
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showStatus(statusErr, 'Inserisci un indirizzo email valido.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.childNodes[0].textContent = 'Invio…';
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome, email, consenso }),
+          mode: 'no-cors'
+        });
+
+        form.reset();
+        showStatus(statusOk, 'Perfetto! La tua registrazione è stata ricevuta. A presto!');
+
+      } catch (err) {
+        showStatus(statusErr, 'Qualcosa è andato storto. Riprova o contattaci direttamente.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.childNodes[0].textContent = 'Registrati';
+      }
+    });
+  </script>
+
+</body>
+</html>
